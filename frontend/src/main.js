@@ -1,9 +1,9 @@
-import { getSettings, getPages } from "./api";
+import { getSetting, getPages } from "./api";
 
 
 async function start() {
   const [settings, page] = await Promise.all([
-    getSettings(),
+    getSetting(),
     getPages(location.pathname)
   ]);
 
