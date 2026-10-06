@@ -1,12 +1,21 @@
-import { getSetting, getPages } from "./api";
-
+import "./styles/base.css";
+import { getSettings, getPages } from "./api";
+import { hero } from "./blocks/hero/hero";
 
 async function start() {
-  const [settings, page] = await Promise.all([
-    getSetting(),
-    getPages(location.pathname)
-  ]);
+  // const settings = await getSettings();
+  try {
+    const [settings, page] = await Promise.all([
+      getSettings(),
+      getPages(location.pathname),
+    ]);
 
-  console.log(settings);
-  console.log(page);
+    document.title = `${page.title} - ${settings.siteName}`;
+    const heroBlock = page.blocks.find((block) => block.type === "hero");
+    app.innerHTML = hero(heroBlock);
+  } catch (error) {
+    app.textContent = `Something went wrong: ${error.message}`;
+  }
 }
+
+start();
