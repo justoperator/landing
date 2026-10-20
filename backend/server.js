@@ -4,7 +4,11 @@ import settings from "./data/common.json" with { type: "json" };
 import pages from "./data/pages.json" with { type: "json" };
 
 const app = express();
-app.use(cors({ origin: process.env.FRONTEND_URL }));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+  }),
+);
 
 const PORT = process.env.PORT || 3000;
 
@@ -19,7 +23,7 @@ app.get("/api/pages", (req, res) => {
     return res.status(404).json({ error: "Page not found" });
   }
 
-  return res.json(page);
+  res.json(page);
 });
 
 app.listen(PORT, () => {
